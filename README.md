@@ -1,0 +1,1 @@
+# secrets-rotation-manager
