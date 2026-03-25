@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Secrets Rotation Manager UI</title>
+    <link rel="stylesheet" href="/app/styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Secrets Rotation Manager</h1>
+      <p>Simple frontend dashboard for API-driven secret rotation operations.</p>
+    </header>
+
+    <main>
+      <section class="card">
+        <h2>Secrets</h2>
+        <button id="loadSecrets">Load registered secrets</button>
+        <ul id="secretsList"></ul>
+      </section>
+
+      <section class="card">
+        <h2>Manual Rotation</h2>
+        <label>Secret Name:</label>
+        <input id="manualSecretName" placeholder="e.g. db-password" />
+        <button id="manualRotate">Trigger Rotation</button>
+        <p id="manualRotationMessage"></p>
+      </section>
+
+      <section class="card">
+        <h2>Health Check</h2>
+        <button id="checkHealth">Check API status</button>
+        <pre id="healthOutput"></pre>
+      </section>
+    </main>
+
+    <script src="/app/app.js"></script>
+  </body>
+</html>
