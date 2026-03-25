@@ -1,0 +1,226 @@
+:root {
+  --bg: #0f172a;
+  --panel: #111827;
+  --panel-alt: #1f2937;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --accent: #3b82f6;
+  --border: rgba(148, 163, 184, 0.3);
+  --success: #22c55e;
+  --danger: #ef4444;
+  --radius: 0.75rem;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text);
+  font-family: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: radial-gradient(circle at 20% 10%, #15203b 0%, #0b1226 45%, #050a16 100%);
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  background: linear-gradient(180deg, #0b1226 0%, #111827 100%);
+  border-right: 1px solid var(--border);
+  color: var(--text);
+  padding: 1.2rem 1rem;
+}
+
+.logo {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  letter-spacing: 0.03em;
+}
+
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.panelButton {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: rgba(30, 41, 59, 0.6);
+  color: var(--text);
+  padding: 0.63rem 0.85rem;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.panelButton.active,
+.panelButton:hover {
+  background: #1d4ed8;
+  border-color: #2563eb;
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.workspace {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: 1.6rem;
+}
+
+.topbar small {
+  color: var(--muted);
+}
+
+.tabPanel { display: none; }
+.tabPanel.active { display: block; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.stat-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+}
+
+.stat-card h3 {
+  margin: 0 0 0.6rem;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.stat-card p,
+.stat-card code {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #e2e8f0;
+}
+
+.panelHeader,
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.panelHeader h2 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.dataTable {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 640px;
+}
+
+.dataTable th,
+.dataTable td {
+  padding: 0.65rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.dataTable th {
+  background: rgba(15, 23, 42, 0.8);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.dataTable tbody tr:hover { background: rgba(30, 41, 59, 0.7); }
+
+.formRow {
+  display: flex;
+  gap: 0.65rem;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+
+input[type="text"], textarea, select {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.65rem 0.75rem;
+  background: #0f172a;
+  color: #e2e8f0;
+  font-size: 0.95rem;
+  flex: 1;
+  min-width: 220px;
+}
+
+button, .controlButton {
+  border: none;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.55rem 0.9rem;
+}
+
+button:hover, .controlButton:hover { background: #1d4ed8; }
+
+.notification {
+  font-size: 0.95rem;
+  margin-top: 0.45rem;
+}
+
+.notification.error {
+  color: var(--danger);
+}
+
+.notification.success {
+  color: var(--success);
+}
+
+.scrollOutput {
+  background: #0c1224;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.8rem;
+  min-height: 150px;
+  max-height: 350px;
+  overflow: auto;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 1100px) {
+  .app-shell { grid-template-columns: 1fr; }
+  .sidebar { order: 2; }
+  .workspace { order: 1; }
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 720px) {
+  .grid { grid-template-columns: 1fr; }
+  .panelHeader, .actions { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+}

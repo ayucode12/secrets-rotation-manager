@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Professional dashboard for Secrets Rotation Manager" />
+    <title>Secrets Rotation Manager - Console</title>
+    <link rel="stylesheet" href="/app/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="logo">Secrets Rotation Manager</div>
+        <nav>
+          <button data-panel="dashboard" class="panelButton active">Dashboard</button>
+          <button data-panel="secrets" class="panelButton">Secrets</button>
+          <button data-panel="rotations" class="panelButton">Rotations</button>
+          <button data-panel="schedules" class="panelButton">Schedules</button>
+          <button data-panel="logs" class="panelButton">Logs</button>
+          <button data-panel="health" class="panelButton">Health</button>
+        </nav>
+      </aside>
+      <main class="workspace">
+        <header class="topbar">
+          <h1>Secrets Rotation Manager</h1>
+          <small>Enterprise dashboard for secret lifecycle management</small>
+        </header>
+
+        <section id="dashboard" class="tabPanel active">
+          <div class="grid">
+            <div class="stat-card">
+              <h3>Active Rotations</h3>
+              <p id="dashRotations">-</p>
+            </div>
+            <div class="stat-card">
+              <h3>Secrets Registered</h3>
+              <p id="dashSecrets">-</p>
+            </div>
+            <div class="stat-card">
+              <h3>Schedules Active</h3>
+              <p id="dashSchedules">-</p>
+            </div>
+            <div class="stat-card">
+              <h3>API Status</h3>
+              <code id="dashHealth">unknown</code>
+            </div>
+          </div>
+          <div class="actions">
+            <button id="refreshDashboard">Refresh Dashboard</button>
+            <button id="quickSetup" style="background: #059669;">Quick Setup</button>
+          </div>
+          <p id="quickSetupMessage" class="notification" />
+        </section>
+
+        <section id="secrets" class="tabPanel">
+          <div class="panelHeader">
+            <h2>Secrets</h2>
+            <button id="loadSecrets">Refresh list</button>
+          </div>
+          <div class="formRow" style="margin-bottom: 1rem;">
+            <input id="registerSecretName" type="text" placeholder="Secret name" />
+            <select id="registerSecretType">
+              <option value="custom">Custom</option>
+              <option value="api-key">API Key</option>
+              <option value="db-credentials">Database Credentials</option>
+              <option value="certificate">Certificate</option>
+            </select>
+            <input id="registerRotationPolicy" type="text" placeholder="Rotation policy (e.g., time-based)" />
+            <button id="registerSecret">Register Secret</button>
+          </div>
+          <p id="registerSecretMessage" class="notification" />
+          <div class="tableWrapper">
+            <table class="dataTable">
+              <thead><tr><th>Name</th><th>Type</th><th>Version</th><th>Policy</th><th>Services</th></tr></thead>
+              <tbody id="secretsTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="rotations" class="tabPanel">
+          <div class="panelHeader">
+            <h2>Trigger Manual Rotation</h2>
+          </div>
+          <div class="formRow">
+            <input id="manualSecretName" type="text" placeholder="Enter secret name" />
+            <button id="manualRotate">Run rotation</button>
+          </div>
+          <p id="manualRotationMessage" class="notification" />
+        </section>
+
+        <section id="schedules" class="tabPanel">
+          <div class="panelHeader">
+            <h2>Schedules</h2>
+            <button id="loadSchedules">Load active schedules</button>
+          </div>
+          <div class="formRow" style="margin-bottom: 1rem;">
+            <input id="scheduleSecretName" type="text" placeholder="Secret name" />
+            <input id="scheduleCron" type="text" placeholder="Cron expression (e.g., 0 0 * * 1)" />
+            <input id="scheduleServices" type="text" placeholder="Affected services (comma-separated)" />
+            <button id="createSchedule">Create Schedule</button>
+          </div>
+          <p id="createScheduleMessage" class="notification" />
+          <div class="tableWrapper">
+            <table class="dataTable">
+              <thead><tr><th>Secret</th><th>Cron</th><th>Active</th><th>Services</th><th>Created</th></tr></thead>
+              <tbody id="schedulesTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="logs" class="tabPanel">
+          <div class="panelHeader">
+            <h2>Rotation Logs</h2>
+            <button id="loadLogs">Load logs</button>
+          </div>
+          <pre id="logsOutput" class="scrollOutput">Use Load logs to display latest entries.</pre>
+        </section>
+
+        <section id="health" class="tabPanel">
+          <div class="panelHeader"><h2>Health</h2></div>
+          <button id="checkHealth">Run health check</button>
+          <pre id="healthOutput" class="scrollOutput"></pre>
+        </section>
+      </main>
+    </div>
+
+    <script src="/app/app.js"></script>
+  </body>
+</html>
