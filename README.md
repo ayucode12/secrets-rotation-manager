@@ -382,6 +382,7 @@ For issues and questions:
 ## Changelog
 
 See [CHANGELOG.md](./CHANGELOG.md) for version history and updates.
+This is very important.
 
 ---
 
