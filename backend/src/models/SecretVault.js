@@ -66,7 +66,7 @@ const SecretVaultSchema = new mongoose.Schema(
       default: {},
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 SecretVaultSchema.index({ rotationPolicy: 1, status: 1 });

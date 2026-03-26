@@ -63,7 +63,7 @@ const RotationScheduleSchema = new mongoose.Schema(
       default: "",
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 RotationScheduleSchema.index({ isActive: 1, nextExecutionTime: 1 });

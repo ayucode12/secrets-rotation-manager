@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const rotationService = require("../../../services/rotationService");
-const RotationLog = require("../../../models/RotationLog");
-const RotationSchedule = require("../../../models/RotationSchedule");
-const SecretVault = require("../../../models/SecretVault");
+const rotationService = require("../../services/rotationService");
+const RotationLog = require("../../models/RotationLog");
+const RotationSchedule = require("../../models/RotationSchedule");
+const SecretVault = require("../../models/SecretVault");
 const logger = require("../../utils/logger");
 const { v4: uuidv4 } = require("uuid");
 
@@ -61,7 +61,7 @@ router.post(
         error: error.message,
       });
     }
-  })
+  }),
 );
 
 /**
@@ -79,7 +79,7 @@ router.get(
     }
 
     return res.status(200).json({ success: true, status });
-  })
+  }),
 );
 
 /**
@@ -99,7 +99,7 @@ router.post(
       logger.error(`Failed to cancel rotation ${rotationId}:`, error);
       return res.status(400).json({ error: error.message });
     }
-  })
+  }),
 );
 
 // ===== ROTATION HISTORY ENDPOINTS =====
@@ -121,7 +121,7 @@ router.get(
       count: history.length,
       history,
     });
-  })
+  }),
 );
 
 /**
@@ -152,7 +152,7 @@ router.get(
       limit: parseInt(limit),
       logs,
     });
-  })
+  }),
 );
 
 // ===== SCHEDULE MANAGEMENT ENDPOINTS =====
@@ -200,7 +200,7 @@ router.post(
       message: "Schedule created successfully",
       schedule,
     });
-  })
+  }),
 );
 
 /**
@@ -218,7 +218,7 @@ router.get(
     }
 
     return res.status(200).json({ success: true, schedule });
-  })
+  }),
 );
 
 /**
@@ -234,7 +234,7 @@ router.get(
       count: schedules.length,
       schedules,
     });
-  })
+  }),
 );
 
 /**
@@ -266,7 +266,7 @@ router.patch(
       message: "Schedule updated successfully",
       schedule,
     });
-  })
+  }),
 );
 
 /**
@@ -291,7 +291,7 @@ router.delete(
       success: true,
       message: "Schedule deactivated successfully",
     });
-  })
+  }),
 );
 
 // ===== SECRET VAULT ENDPOINTS =====
@@ -342,7 +342,7 @@ router.post(
         dependentServices,
       },
     });
-  })
+  }),
 );
 
 /**
@@ -360,7 +360,7 @@ router.get(
     }
 
     return res.status(200).json({ success: true, secret });
-  })
+  }),
 );
 
 /**
@@ -378,7 +378,7 @@ router.get(
       count: secrets.length,
       secrets,
     });
-  })
+  }),
 );
 
 /**
@@ -411,7 +411,7 @@ router.patch(
       message: "Secret updated successfully",
       secret: secret.toObject({ hide: "encryptedValue" }),
     });
-  })
+  }),
 );
 
 module.exports = router;

@@ -41,7 +41,7 @@ class CronScheduler {
       // Validate cron expression
       if (!cron.validate(schedule.cronExpression)) {
         console.error(
-          `[CRON SCHEDULER] Invalid cron expression for ${schedule.secretName}: ${schedule.cronExpression}`
+          `[CRON SCHEDULER] Invalid cron expression for ${schedule.secretName}: ${schedule.cronExpression}`,
         );
         return false;
       }
@@ -62,7 +62,7 @@ class CronScheduler {
 
       schedule.nextExecutionTime = nextRun;
       schedule.save().catch((err) =>
-        console.error(`[CRON SCHEDULER] Error updating schedule: ${err.message}`)
+        console.error(`[CRON SCHEDULER] Error updating schedule: ${err.message}`),
       );
 
       this.tasks.set(schedule.secretName, {
@@ -73,7 +73,7 @@ class CronScheduler {
       });
 
       console.log(
-        `[CRON SCHEDULER] Task added for ${schedule.secretName} (${schedule.cronExpression}). Next run: ${nextRun}`
+        `[CRON SCHEDULER] Task added for ${schedule.secretName} (${schedule.cronExpression}). Next run: ${nextRun}`,
       );
 
       return true;
@@ -97,7 +97,7 @@ class CronScheduler {
       // Execute rotation
       const result = await rotationService.initiateZeroDowntimeRotation(
         schedule.secretName,
-        "cron"
+        "cron",
       );
 
       if (result.success) {
@@ -122,7 +122,7 @@ class CronScheduler {
     } catch (error) {
       console.error(
         `[CRON SCHEDULER] Error executing rotation for ${schedule.secretName}:`,
-        error.message
+        error.message,
       );
 
       // Log failure and send notification

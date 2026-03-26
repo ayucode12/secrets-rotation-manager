@@ -1,6 +1,6 @@
 const express = require("express");
-const rotationService = require("../../../services/rotationService");
-const cronScheduler = require("../../../services/cronScheduler");
+const rotationService = require("../../services/rotationService");
+const cronScheduler = require("../../services/cronScheduler");
 
 const router = express.Router();
 

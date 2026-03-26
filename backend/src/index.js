@@ -1,7 +1,7 @@
 require("dotenv").config();
 const app = require("./app");
 const connectDB = require("./config/database");
-const cronScheduler = require("../services/cronScheduler");
+const cronScheduler = require("./services/cronScheduler");
 const logger = require("./utils/logger");
 
 const PORT = process.env.PORT || 5000;
@@ -13,7 +13,7 @@ const ENV = process.env.NODE_ENV || "development";
 async function bootstrap() {
   try {
     console.log(`\n${"═".repeat(70)}`);
-    console.log(`   SECRETS ROTATION MANAGER - Server Initialization`);
+    console.log("   SECRETS ROTATION MANAGER - Server Initialization");
     console.log(`${"═".repeat(70)}`);
     console.log(`   Environment: ${ENV}`);
     console.log(`   Port: ${PORT}`);

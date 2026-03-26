@@ -22,7 +22,7 @@ app.use(
   cors({
     origin: (process.env.CORS_ORIGIN || "http://localhost:5000").split(","),
     credentials: true,
-  })
+  }),
 );
 
 // Rate Limiting

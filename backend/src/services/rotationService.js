@@ -68,7 +68,7 @@ class RotationService {
         newSecret,
         newVersion,
         secretVault.dependentServices,
-        backup
+        backup,
       );
 
       // Step 5: Validate new secret across all services
@@ -76,7 +76,7 @@ class RotationService {
         secretName,
         newVersion,
         secretVault.dependentServices,
-        secretVault.validationScript
+        secretVault.validationScript,
       );
 
       if (!validationResults.allValidated) {
@@ -303,8 +303,8 @@ class RotationService {
         newSecret,
         newVersion,
         retryAttempts,
-        retryDelayMs
-      )
+        retryDelayMs,
+      ),
     );
 
     const results = await Promise.allSettled(updatePromises);
@@ -326,7 +326,7 @@ class RotationService {
     for (let attempt = 1; attempt <= retries; attempt++) {
       try {
         console.log(
-          `[SERVICE UPDATE] Updating ${service} with new secret (Attempt ${attempt}/${retries})`
+          `[SERVICE UPDATE] Updating ${service} with new secret (Attempt ${attempt}/${retries})`,
         );
 
         // Execute update script
@@ -345,7 +345,7 @@ class RotationService {
       } catch (error) {
         console.error(
           `[SERVICE UPDATE] Failed to update ${service} (Attempt ${attempt}/${retries}):`,
-          error.message
+          error.message,
         );
 
         if (attempt < retries) {
@@ -371,7 +371,7 @@ class RotationService {
    */
   async validateSecretAcrossServices(secretName, newVersion, services, validationScript) {
     const validationPromises = services.map((service) =>
-      this.validateServiceSecret(service, secretName, newVersion, validationScript)
+      this.validateServiceSecret(service, secretName, newVersion, validationScript),
     );
 
     const results = await Promise.allSettled(validationPromises);
@@ -444,7 +444,7 @@ class RotationService {
 
       // Notify all services to revert
       const revertPromises = affectedServices.map((service) =>
-        this.revertServiceSecret(service, secretName, previousVersion)
+        this.revertServiceSecret(service, secretName, previousVersion),
       );
 
       const results = await Promise.allSettled(revertPromises);
