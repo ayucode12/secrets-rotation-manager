@@ -1,0 +1,13 @@
+{
+  "name": "@repo/queue",
+  "version": "1.0.0",
+  "description": "Redis queue for secret rotation jobs",
+  "main": "./src/index.js",
+  "scripts": {
+    "test": "echo \"No tests configured\""
+  },
+  "dependencies": {
+    "ioredis": "^5.6.1"
+  },
+  "license": "ISC"
+}

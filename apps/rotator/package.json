@@ -1,0 +1,14 @@
+{
+  "name": "rotator",
+  "version": "1.0.0",
+  "description": "Queue worker that processes secret rotations",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "node src/index.js"
+  },
+  "dependencies": {
+    "@repo/database": "*",
+    "@repo/queue": "*"
+  },
+  "type": "commonjs"
+}

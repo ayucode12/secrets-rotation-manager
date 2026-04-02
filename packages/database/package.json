@@ -1,0 +1,13 @@
+{
+  "name": "@repo/database",
+  "version": "1.0.0",
+  "description": "MongoDB database layer with Mongoose",
+  "main": "./src/index.js",
+  "scripts": {
+    "test": "echo \"No tests configured\""
+  },
+  "dependencies": {
+    "mongoose": "^8.13.1"
+  },
+  "license": "ISC"
+}
