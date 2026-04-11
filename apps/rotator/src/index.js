@@ -1,17 +1,14 @@
-const crypto = require("crypto");
 const {
   connectDatabase,
   secretQueries,
   rotationLogQueries,
 } = require("@repo/database");
 const { createRedisClient, popFromQueue } = require("@repo/queue");
+const { generateNewValue } = require("./strategies");
+const { deliverToTargets } = require("./targets");
 
 const MONGO_URI =
   process.env.MONGO_URI || "mongodb://localhost:27017/secrets-manager";
-
-function generateSecretValue() {
-  return crypto.randomBytes(32).toString("hex");
-}
 
 async function handleRotation({ secretId, triggeredBy }) {
   const secret = await secretQueries.findById(secretId);
@@ -20,7 +17,7 @@ async function handleRotation({ secretId, triggeredBy }) {
   }
 
   try {
-    const newValue = generateSecretValue();
+    const newValue = await generateNewValue(secret);
     const now = new Date();
     const nextRotationAt = new Date(
       now.getTime() + secret.rotationIntervalDays * 24 * 60 * 60 * 1000
@@ -33,15 +30,26 @@ async function handleRotation({ secretId, triggeredBy }) {
       status: "active",
     });
 
+    const deliveryResults = await deliverToTargets(secret, newValue);
+
+    const failed = deliveryResults.filter((r) => !r.ok);
+    let message = `Rotated via ${secret.provider || "generic"} strategy`;
+    if (deliveryResults.length > 0) {
+      message += ` — delivered to ${deliveryResults.length - failed.length}/${deliveryResults.length} targets`;
+    }
+    if (failed.length > 0) {
+      message += ` (failed: ${failed.map((f) => f.label).join(", ")})`;
+    }
+
     await rotationLogQueries.create({
       secretId: secret._id,
       secretName: secret.name,
-      status: "success",
+      status: failed.length > 0 ? "failure" : "success",
       triggeredBy,
-      message: "Rotated successfully",
+      message,
     });
 
-    console.log(`[rotator] Rotated "${secret.name}" (${triggeredBy})`);
+    console.log(`[rotator] ${message} — "${secret.name}" (${triggeredBy})`);
   } catch (err) {
     await rotationLogQueries.create({
       secretId: secret._id,

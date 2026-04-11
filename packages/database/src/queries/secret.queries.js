@@ -9,7 +9,15 @@ const secretQueries = {
     return Secret.findById(id).lean();
   },
 
-  create({ name, service, value, rotationIntervalDays = 30 }) {
+  create({
+    name,
+    service,
+    value,
+    rotationIntervalDays = 30,
+    provider = "generic",
+    providerConfig = {},
+    targets = [],
+  }) {
     const lastRotatedAt = new Date();
     const nextRotationAt = new Date(
       lastRotatedAt.getTime() + rotationIntervalDays * 24 * 60 * 60 * 1000
@@ -19,6 +27,9 @@ const secretQueries = {
       service,
       value,
       rotationIntervalDays,
+      provider,
+      providerConfig,
+      targets,
       lastRotatedAt,
       nextRotationAt,
     });

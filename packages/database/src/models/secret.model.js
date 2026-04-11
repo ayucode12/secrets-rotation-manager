@@ -1,5 +1,18 @@
 const { Schema, model } = require("mongoose");
 
+const targetSchema = new Schema(
+  {
+    type: {
+      type: String,
+      enum: ["webhook", "aws-ssm", "env-file"],
+      required: true,
+    },
+    label: { type: String, trim: true },
+    config: { type: Schema.Types.Mixed, required: true },
+  },
+  { _id: true }
+);
+
 const secretSchema = new Schema(
   {
     name: { type: String, required: true, unique: true, trim: true },
@@ -10,6 +23,13 @@ const secretSchema = new Schema(
       enum: ["active", "expired", "rotating"],
       default: "active",
     },
+    provider: {
+      type: String,
+      enum: ["generic", "database", "custom-api"],
+      default: "generic",
+    },
+    providerConfig: { type: Schema.Types.Mixed, default: {} },
+    targets: { type: [targetSchema], default: [] },
     rotationIntervalDays: { type: Number, default: 30, min: 1 },
     lastRotatedAt: { type: Date, default: Date.now },
     nextRotationAt: { type: Date },
