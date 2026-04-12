@@ -1,6 +1,6 @@
 const { connectDatabase, disconnectDatabase } = require("./connection");
-const { User, Secret, RotationLog } = require("./models");
-const { userQueries, secretQueries, rotationLogQueries } = require("./queries");
+const { User, Secret, RotationLog, ApiKey } = require("./models");
+const { userQueries, secretQueries, rotationLogQueries, apiKeyQueries } = require("./queries");
 
 module.exports = {
   connectDatabase,
@@ -8,7 +8,9 @@ module.exports = {
   User,
   Secret,
   RotationLog,
+  ApiKey,
   userQueries,
   secretQueries,
   rotationLogQueries,
+  apiKeyQueries,
 };
