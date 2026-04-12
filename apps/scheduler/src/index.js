@@ -1,10 +1,9 @@
-const cron = require("node-cron");
 const { connectDatabase, secretQueries } = require("@repo/database");
 const { createRedisClient, pushToQueue } = require("@repo/queue");
 
 const MONGO_URI =
   process.env.MONGO_URI || "mongodb://localhost:27017/secrets-manager";
-const CRON_SCHEDULE = process.env.CRON_SCHEDULE || "* * * * *";
+const POLL_INTERVAL_MS = Number(process.env.POLL_INTERVAL_MS) || 15000;
 
 const redis = createRedisClient();
 
@@ -12,7 +11,6 @@ async function checkAndEnqueue() {
   const dueSecrets = await secretQueries.findDueForRotation();
 
   if (dueSecrets.length === 0) {
-    console.log("[scheduler] No secrets due for rotation");
     return;
   }
 
@@ -33,15 +31,13 @@ async function checkAndEnqueue() {
 async function start() {
   await connectDatabase(MONGO_URI);
   console.log("[scheduler] Connected to database");
+  console.log(`[scheduler] Polling every ${POLL_INTERVAL_MS / 1000}s`);
 
-  console.log(`[scheduler] Cron schedule: "${CRON_SCHEDULE}"`);
-  cron.schedule(CRON_SCHEDULE, () => {
+  setInterval(() => {
     checkAndEnqueue().catch((err) =>
       console.error("[scheduler] Error:", err.message)
     );
-  });
-
-  console.log("[scheduler] Waiting for next tick...");
+  }, POLL_INTERVAL_MS);
 }
 
 start().catch((err) => {

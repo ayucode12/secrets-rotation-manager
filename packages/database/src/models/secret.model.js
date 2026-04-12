@@ -4,7 +4,7 @@ const targetSchema = new Schema(
   {
     type: {
       type: String,
-      enum: ["webhook", "aws-ssm", "env-file"],
+      enum: ["webhook"],
       required: true,
     },
     label: { type: String, trim: true },
@@ -25,7 +25,7 @@ const secretSchema = new Schema(
     },
     provider: {
       type: String,
-      enum: ["generic", "database", "custom-api"],
+      enum: ["generic", "custom-api"],
       default: "generic",
     },
     providerConfig: { type: Schema.Types.Mixed, default: {} },

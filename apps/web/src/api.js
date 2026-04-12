@@ -1,4 +1,4 @@
-const API = "/api";
+const API = "/api/v1";
 
 export async function fetchSecrets() {
   const res = await fetch(`${API}/secrets`);
@@ -34,20 +34,22 @@ export async function fetchLogs() {
   return res.json();
 }
 
+// --- Demo/testing only ---
 export async function fetchWebhookHits() {
-  const res = await fetch(`${API}/test/webhook`);
+  const res = await fetch("/api/test/webhook");
   if (!res.ok) throw new Error("Failed to fetch webhook hits");
   return res.json();
 }
 
 export async function seedDemo() {
-  const res = await fetch(`${API}/demo/seed`, { method: "POST" });
+  const res = await fetch("/api/demo/seed", { method: "POST" });
   if (!res.ok) throw new Error("Failed to seed demo");
   return res.json();
 }
 
 export async function clearDemo() {
-  const res = await fetch(`${API}/demo`, { method: "DELETE" });
+  const res = await fetch("/api/demo", { method: "DELETE" });
   if (!res.ok) throw new Error("Failed to clear demo");
   return res.json();
 }
+// --- End demo/testing only ---

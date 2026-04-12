@@ -1,10 +1,8 @@
 const generic = require("./generic");
-const database = require("./database");
 const customApi = require("./custom-api");
 
 const strategies = {
   generic,
-  database,
   "custom-api": customApi,
 };
 

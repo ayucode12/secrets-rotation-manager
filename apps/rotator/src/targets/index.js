@@ -1,11 +1,7 @@
 const webhook = require("./webhook");
-const awsSsm = require("./aws-ssm");
-const envFile = require("./env-file");
 
 const handlers = {
   webhook,
-  "aws-ssm": awsSsm,
-  "env-file": envFile,
 };
 
 /**

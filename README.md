@@ -88,21 +88,21 @@ Open `http://localhost:5173` — the dashboard is ready.
 
 ## API Endpoints
 
-| Method | Endpoint                | Description                         |
-| ------ | ----------------------- | ----------------------------------- |
-| GET    | /api/secrets            | List all secrets (values masked)    |
-| POST   | /api/secrets            | Create a new secret                 |
-| GET    | /api/secrets/:id        | Get a single secret                 |
-| PUT    | /api/secrets/:id        | Update secret metadata              |
-| DELETE | /api/secrets/:id        | Delete a secret                     |
-| POST   | /api/secrets/:id/rotate | Queue a manual rotation job         |
-| GET    | /api/secrets/:id/logs   | Get rotation logs for a secret      |
-| GET    | /api/logs               | Get all rotation logs               |
+| Method | Endpoint                   | Description                         |
+| ------ | -------------------------- | ----------------------------------- |
+| GET    | /api/v1/secrets            | List all secrets (values masked)    |
+| POST   | /api/v1/secrets            | Create a new secret                 |
+| GET    | /api/v1/secrets/:id        | Get a single secret                 |
+| PUT    | /api/v1/secrets/:id        | Update secret metadata              |
+| DELETE | /api/v1/secrets/:id        | Delete a secret                     |
+| POST   | /api/v1/secrets/:id/rotate | Queue a manual rotation job         |
+| GET    | /api/v1/secrets/:id/logs   | Get rotation logs for a secret      |
+| GET    | /api/v1/logs               | Get all rotation logs               |
 
 ### Creating a Secret with Provider & Targets
 
 ```json
-POST /api/secrets
+POST /api/v1/secrets
 {
   "name": "DATABASE_PASSWORD",
   "service": "database",
